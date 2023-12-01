@@ -61,11 +61,20 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("endNumber").value = 100;
 });
 
+const startDateTimeInput = document.getElementById("startDateTime");
+const targetDateTimeInput = document.getElementById("targetDateTime");
+const startNumberInput = document.getElementById("startNumber");
+const endNumberInput = document.getElementById("endNumber");
 const timePerSliceInput = document.getElementById("timePerSlice");
 const timeUnitSelect = document.getElementById("timeUnit");
 
+startDateTimeInput.addEventListener("input", generateTimeSlices);
+targetDateTimeInput.addEventListener("input", generateTimeSlices);
+startNumberInput.addEventListener("input", generateTimeSlices);
+endNumberInput.addEventListener("input", generateTimeSlices);
 timePerSliceInput.addEventListener("input", generateTimeSlices);
 timeUnitSelect.addEventListener("change", generateTimeSlices);
+
 
 function generateTimeSlices() {
     const startDateInput = document.getElementById("startDateTime").value;
