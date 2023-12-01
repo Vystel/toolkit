@@ -91,10 +91,32 @@ function generateTimeSlices() {
         return;
     }
 
+    let totalSlices = 0;
+    let currentTime = startDate;
+
+    while (currentTime < targetDate) {
+        totalSlices++;
+
+        if (timeUnit === "days") {
+            currentTime = new Date(currentTime.getTime() + (timePerSlice * 24 * 60 * 60 * 1000)); // Days
+        } else if (timeUnit === "hours") {
+            currentTime = new Date(currentTime.getTime() + (timePerSlice * 60 * 60 * 1000)); // Hours
+        } else if (timeUnit === "minutes") {
+            currentTime = new Date(currentTime.getTime() + (timePerSlice * 60 * 1000)); // Minutes
+        } else if (timeUnit === "seconds") {
+            currentTime = new Date(currentTime.getTime() + (timePerSlice * 1000)); // Seconds
+        }
+
+        if (totalSlices > 250) {
+            alert("Error: The number of slices exceeds 250. Please adjust your input.");
+            document.getElementById("timeSlices").innerHTML = "";
+            return;
+        }
+    }
     const timeSlicesContainer = document.getElementById("timeSlices");
     timeSlicesContainer.innerHTML = "";
 
-    let currentTime = startDate;
+    currentTime = startDate;
 
     while (currentTime < targetDate) {
         const timeElapsed = (currentTime - startDate) / 1000;
