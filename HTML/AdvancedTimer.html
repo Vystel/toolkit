@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Advanced Timer</title>
+	<link href="../CSS/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div class="sidebar">
+		<div class="sidebar-content">
+			<a href="../index.html"><class="icon">Home</a>
+			<a class="current"><class="icon">Advanced Timer</a>
+		</div>
+	</div>
+	<div class="content">
+		<div class="container">
+			<h1>Advanced Timer</h1>
+			<label for="startDateTime">Start Date and Time:</label>
+			<input type="datetime-local" id="startDateTime">
+			<label for="targetDateTime">Target Date and Time:</label>
+			<input type="datetime-local" id="targetDateTime">
+			<label for="startNumber">Start Number:</label>
+			<input type="number" id="startNumber">
+			<label for="endNumber">Target Number:</label>
+			<input type="number" id="endNumber">
+			<h1 id="countdown"></h1>
+		</div>
+		<div id="infoModal" class="modal">
+			<div class="modal-content">
+				<span class="close-button" onclick="closeModal()">&times;</span>
+				<h2>About This Program</h2>
+				<p>This is a advanced timer web application. You can set a start date and time, a target date and time, as well as start and end numbers. The countdown will display the current number based on the progress between the start and target times.</p>
+			</div>
+		</div>
+	</div>
+	<button id="infoButton" onclick="openModal()" class="info-button">?</button>
+	<script src="../JavaScript/AdvancedTimer.js"></script>
+</body>
+
