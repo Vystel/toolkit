@@ -17,6 +17,8 @@ body {
     border-radius: 10px;
     padding: 20px;
     max-width: 400px;
+    max-height: 70vh;
+    overflow-y: auto;
 }
 
 h1 {
@@ -25,7 +27,7 @@ h1 {
 }
 
 input {
-    padding: 15px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-top: 10px;
@@ -59,7 +61,7 @@ input[type="button"]:hover {
 }
 
 #countdown {
-    margin: 10px 0 10px 0;
+    margin: 30px 0 10px 0;
 }
 
 @media screen and (max-width: 600px) {
@@ -191,4 +193,65 @@ input[type="button"]:hover {
 .content {
     display: flex;
     margin-left: 250px;
+}
+
+select#timeUnit {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #444;
+    color: #fff;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+select#timeUnit:hover {
+    background-color: #555;
+    border-color: #888;
+}
+
+select#timeUnit:focus {
+    outline: none;
+    border-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+select#timeUnit::-ms-expand {
+    display: none;
+}
+
+select#timeUnit::after {
+    content: "▼";
+    font-size: 14px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #fff;
+}
+
+select#timeUnit option {
+    background-color: #444;
+    color: #fff;
+    padding: 12px;
+}
+
+select#timeUnit option:hover {
+    background-color: #555;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #888;
 }
