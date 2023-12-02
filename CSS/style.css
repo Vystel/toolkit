@@ -70,6 +70,40 @@ input[type="button"]:hover {
     }
 }
 
+button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #444;
+    color: #fff;
+    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+    border-color: #888;
+}
+
+button:focus {
+    outline: none;
+    border-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+button:active {
+    background-color: #fff;
+    border-color: #666;
+}
+.margin {
+    margin-bottom: 25px;
+}
+
+
 .modal {
     display: none;
     position: fixed;
@@ -195,7 +229,7 @@ input[type="button"]:hover {
     /*margin-left: 250px;*/
 }
 
-select#timeUnit {
+select {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -206,22 +240,22 @@ select#timeUnit {
     transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
 
-select#timeUnit:hover {
+select:hover {
     background-color: #555;
     border-color: #888;
 }
 
-select#timeUnit:focus {
+select:focus {
     outline: none;
     border-color: #fff;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-select#timeUnit::-ms-expand {
+select::-ms-expand {
     display: none;
 }
 
-select#timeUnit::after {
+select::after {
     content: "▼";
     font-size: 14px;
     position: absolute;
@@ -232,13 +266,13 @@ select#timeUnit::after {
     color: #fff;
 }
 
-select#timeUnit option {
+select option {
     background-color: #444;
     color: #fff;
     padding: 12px;
 }
 
-select#timeUnit option:hover {
+select option:hover {
     background-color: #555;
 }
 

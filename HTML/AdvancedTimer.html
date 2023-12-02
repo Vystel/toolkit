@@ -16,6 +16,11 @@
     <div class="content">
         <div class="container">
             <h1>Advanced Timer</h1>
+            <select id="presetDropdown">
+                <option value="" disabled selected>Select a Preset</option>
+            </select>
+            <button onclick="savePreset()">Save Preset</button>
+            <button id="deletePresetButton" class="margin">Delete Preset</button>
             <label for="startDateTime">Start Date and Time:</label>
             <input type="datetime-local" id="startDateTime">
             <label for="targetDateTime">Target Date and Time:</label>

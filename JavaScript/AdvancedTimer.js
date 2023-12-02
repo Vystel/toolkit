@@ -139,3 +139,89 @@ function generateTimeSlices() {
         }
     }
 }
+
+function savePreset() {
+    const presets = getPresetsFromLocalStorage() || [];
+    const presetName = prompt("Enter a name for the preset:");
+    if (presetName) {
+        const preset = {
+            name: presetName,
+            startDateTime: document.getElementById("startDateTime").value,
+            targetDateTime: document.getElementById("targetDateTime").value,
+            startNumber: document.getElementById("startNumber").value,
+            endNumber: document.getElementById("endNumber").value,
+            timePerSlice: document.getElementById("timePerSlice").value,
+            timeUnit: document.getElementById("timeUnit").value,
+        };
+        presets.push(preset);
+        localStorage.setItem("presets", JSON.stringify(presets));
+        
+        // Update the dropdown immediately
+        const presetDropdown = document.getElementById("presetDropdown");
+        const option = document.createElement("option");
+        option.value = preset.name;
+        option.textContent = preset.name;
+        presetDropdown.appendChild(option);
+    }
+}
+
+
+function loadPreset(presetName) {
+    const presets = getPresetsFromLocalStorage() || [];
+    const preset = presets.find((p) => p.name === presetName);
+    if (preset) {
+        document.getElementById("startDateTime").value = preset.startDateTime;
+        document.getElementById("targetDateTime").value = preset.targetDateTime;
+        document.getElementById("startNumber").value = preset.startNumber;
+        document.getElementById("endNumber").value = preset.endNumber;
+        document.getElementById("timePerSlice").value = preset.timePerSlice;
+        document.getElementById("timeUnit").value = preset.timeUnit;
+        generateTimeSlices();
+    }
+}
+
+function deletePreset(presetName) {
+    const presets = getPresetsFromLocalStorage() || [];
+    const updatedPresets = presets.filter((p) => p.name !== presetName);
+    localStorage.setItem("presets", JSON.stringify(updatedPresets));
+}
+
+function getPresetsFromLocalStorage() {
+    const presetsJson = localStorage.getItem("presets");
+    return presetsJson ? JSON.parse(presetsJson) : [];
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const presets = getPresetsFromLocalStorage();
+    const presetDropdown = document.getElementById("presetDropdown");
+    presets.forEach((preset) => {
+        const option = document.createElement("option");
+        option.value = preset.name;
+        option.textContent = preset.name;
+        presetDropdown.appendChild(option);
+    });
+});
+
+const presetDropdown = document.getElementById("presetDropdown");
+presetDropdown.addEventListener("change", function () {
+    const selectedPreset = presetDropdown.value;
+    if (selectedPreset) {
+        loadPreset(selectedPreset);
+    }
+});
+
+const deletePresetButton = document.getElementById("deletePresetButton");
+deletePresetButton.addEventListener("click", function () {
+    const selectedPreset = presetDropdown.value;
+    if (selectedPreset) {
+        deletePreset(selectedPreset);
+        presetDropdown.remove(presetDropdown.selectedIndex);
+        document.getElementById("startDateTime").value = "";
+        document.getElementById("targetDateTime").value = "";
+        document.getElementById("startNumber").value = "";
+        document.getElementById("endNumber").value = "";
+        document.getElementById("timePerSlice").value = "";
+        document.getElementById("timeUnit").value = "seconds";
+        generateTimeSlices();
+    }
+});
