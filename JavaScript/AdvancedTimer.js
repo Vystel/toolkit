@@ -89,12 +89,11 @@ function generateTimeSlices() {
     timeSlicesContainer.innerHTML = "";
     
     let timeForNextSlice = startDate;
-    let sliceCounter = 0; // Initialize slice counter
+    let sliceCounter = 0;
 
     while (timeForNextSlice < targetDate) {
-        sliceCounter++; // Increment slice counter
+        sliceCounter++;
 
-        // Check if the slice counter exceeds 250
         if (sliceCounter > 250) {
             timeSlicesContainer.innerHTML = "";
             sliceCounter = 0;
@@ -104,20 +103,15 @@ function generateTimeSlices() {
         const sliceEntry = document.createElement("p");
         sliceEntry.textContent = `${timeForNextSlice.toDateString()} ${timeForNextSlice.toLocaleTimeString()}\t${calculateCurrentNumber(timeForNextSlice, startDate, targetDate, startNumber, endNumber)}`;
 
-        // Check if the current slice matches the current time
         if (timeForNextSlice <= currentTime && currentTime < getNextSliceTime(timeForNextSlice, timePerSlice, timeUnit)) {
-            sliceEntry.style.color = "green";
+            sliceEntry.style.color = "lime";
         }
 
         timeSlicesContainer.appendChild(sliceEntry);
 
-        // Calculate the next time slice
         timeForNextSlice = getNextSliceTime(timeForNextSlice, timePerSlice, timeUnit);
     }
 }
-
-// ... (rest of your functions) ...
-
 
 function getNextSliceTime(currentTime, timePerSlice, timeUnit) {
     switch (timeUnit) {
