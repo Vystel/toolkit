@@ -1,5 +1,3 @@
-// AdvancedTimer.js
-
 function updateCountdown() {
     const startDateInput = document.getElementById("startDateTime").value;
     const targetDateInput = document.getElementById("targetDateTime").value;
@@ -24,6 +22,9 @@ function updateCountdown() {
 
 setInterval(updateCountdown, 1);
 updateCountdown();
+
+setInterval(generateTimeSlices, 1);
+generateTimeSlices();
 
 
 function openModal() {
@@ -68,14 +69,6 @@ const endNumberInput = document.getElementById("endNumber");
 const timePerSliceInput = document.getElementById("timePerSlice");
 const timeUnitSelect = document.getElementById("timeUnit");
 
-startDateTimeInput.addEventListener("input", generateTimeSlices);
-targetDateTimeInput.addEventListener("input", generateTimeSlices);
-startNumberInput.addEventListener("input", generateTimeSlices);
-endNumberInput.addEventListener("input", generateTimeSlices);
-timePerSliceInput.addEventListener("input", generateTimeSlices);
-timeUnitSelect.addEventListener("change", generateTimeSlices);
-
-
 function generateTimeSlices() {
     const startDateInput = document.getElementById("startDateTime").value;
     const targetDateInput = document.getElementById("targetDateTime").value;
@@ -91,54 +84,76 @@ function generateTimeSlices() {
         return;
     }
 
-    let totalSlices = 0;
-    let currentTime = startDate;
-
-    while (currentTime < targetDate) {
-        totalSlices++;
-
-        if (timeUnit === "days") {
-            currentTime = new Date(currentTime.getTime() + (timePerSlice * 24 * 60 * 60 * 1000)); // Days
-        } else if (timeUnit === "hours") {
-            currentTime = new Date(currentTime.getTime() + (timePerSlice * 60 * 60 * 1000)); // Hours
-        } else if (timeUnit === "minutes") {
-            currentTime = new Date(currentTime.getTime() + (timePerSlice * 60 * 1000)); // Minutes
-        } else if (timeUnit === "seconds") {
-            currentTime = new Date(currentTime.getTime() + (timePerSlice * 1000)); // Seconds
-        }
-
-        if (totalSlices > 250) {
-            alert("Error: The number of slices exceeds 250. Please adjust your input.");
-            document.getElementById("timeSlices").innerHTML = "";
-            return;
-        }
-    }
+    const currentTime = new Date();
     const timeSlicesContainer = document.getElementById("timeSlices");
     timeSlicesContainer.innerHTML = "";
+    
+    let timeForNextSlice = startDate;
+    let sliceCounter = 0; // Initialize slice counter
 
-    currentTime = startDate;
+    while (timeForNextSlice < targetDate) {
+        sliceCounter++; // Increment slice counter
 
-    while (currentTime < targetDate) {
-        const timeElapsed = (currentTime - startDate) / 1000;
-        const currentNumber = startNumber - (timeElapsed * ((startNumber - endNumber) / ((targetDate - startDate) / 1000)));
+        // Check if the slice counter exceeds 250
+        if (sliceCounter > 250) {
+            timeSlicesContainer.innerHTML = "";
+            sliceCounter = 0;
+            break;
+        }
 
         const sliceEntry = document.createElement("p");
-        sliceEntry.textContent = `${currentTime.toDateString()} ${currentTime.toLocaleTimeString()}\t${currentNumber.toFixed(2)}`;
+        sliceEntry.textContent = `${timeForNextSlice.toDateString()} ${timeForNextSlice.toLocaleTimeString()}\t${calculateCurrentNumber(timeForNextSlice, startDate, targetDate, startNumber, endNumber)}`;
+
+        // Check if the current slice matches the current time
+        if (timeForNextSlice <= currentTime && currentTime < getNextSliceTime(timeForNextSlice, timePerSlice, timeUnit)) {
+            sliceEntry.style.color = "green";
+        }
 
         timeSlicesContainer.appendChild(sliceEntry);
 
-        // Calculate the next time slice based on the selected time unit
-        if (timeUnit === "days") {
-            currentTime = new Date(currentTime.getTime() + (timePerSlice * 24 * 60 * 60 * 1000)); // Days
-        } else if (timeUnit === "hours") {
-            currentTime = new Date(currentTime.getTime() + (timePerSlice * 60 * 60 * 1000)); // Hours
-        } else if (timeUnit === "minutes") {
-            currentTime = new Date(currentTime.getTime() + (timePerSlice * 60 * 1000)); // Minutes
-        } else if (timeUnit === "seconds") {
-            currentTime = new Date(currentTime.getTime() + (timePerSlice * 1000)); // Seconds
-        }
+        // Calculate the next time slice
+        timeForNextSlice = getNextSliceTime(timeForNextSlice, timePerSlice, timeUnit);
     }
 }
+
+// ... (rest of your functions) ...
+
+
+function getNextSliceTime(currentTime, timePerSlice, timeUnit) {
+    switch (timeUnit) {
+        case "days":
+            return new Date(currentTime.getTime() + (timePerSlice * 24 * 60 * 60 * 1000));
+        case "hours":
+            return new Date(currentTime.getTime() + (timePerSlice * 60 * 60 * 1000));
+        case "minutes":
+            return new Date(currentTime.getTime() + (timePerSlice * 60 * 1000));
+        case "seconds":
+            return new Date(currentTime.getTime() + (timePerSlice * 1000));
+        default:
+            return currentTime;
+    }
+}
+
+function calculateCurrentNumber(timeForSlice, startDate, targetDate, startNumber, endNumber) {
+    const timeElapsed = (timeForSlice - startDate) / 1000;
+    return startNumber - (timeElapsed * ((startNumber - endNumber) / ((targetDate - startDate) / 1000))).toFixed(2);
+}
+
+function getNextSliceTime(currentTime, timePerSlice, timeUnit) {
+    switch (timeUnit) {
+        case "days":
+            return new Date(currentTime.getTime() + (timePerSlice * 24 * 60 * 60 * 1000));
+        case "hours":
+            return new Date(currentTime.getTime() + (timePerSlice * 60 * 60 * 1000));
+        case "minutes":
+            return new Date(currentTime.getTime() + (timePerSlice * 60 * 1000));
+        case "seconds":
+            return new Date(currentTime.getTime() + (timePerSlice * 1000));
+        default:
+            return currentTime;
+    }
+}
+
 
 function savePreset() {
     const presets = getPresetsFromLocalStorage() || [];
@@ -156,7 +171,6 @@ function savePreset() {
         presets.push(preset);
         localStorage.setItem("presets", JSON.stringify(presets));
         
-        // Update the dropdown immediately
         const presetDropdown = document.getElementById("presetDropdown");
         const option = document.createElement("option");
         option.value = preset.name;

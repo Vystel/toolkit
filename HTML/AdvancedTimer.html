@@ -1,59 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Timer</title>
-    <link href="../CSS/style.css" rel="stylesheet" type="text/css" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Advanced Timer</title>
+	<link href="../CSS/style.css" rel="stylesheet" type="text/css" />
 </head>
+
 <body>
-    <div class="sidebar">
-        <div class="sidebar-content">
-            <a href="../index.html"><class="icon">Home</a>
-            <a class="current"><class="icon">Advanced Timer</a>
-        </div>
-    </div>
-    <div class="content">
-        <div class="container">
-            <h1>Advanced Timer</h1>
-            <select id="presetDropdown">
-                <option value="" disabled selected>Select a Preset</option>
-            </select>
-            <button onclick="savePreset()">Save Preset</button>
-            <button id="deletePresetButton" class="margin">Delete Preset</button>
-            <label for="startDateTime">Start Date and Time:</label>
-            <input type="datetime-local" id="startDateTime">
-            <label for="targetDateTime">Target Date and Time:</label>
-            <input type="datetime-local" id="targetDateTime">
-            <label for="startNumber">Start Number:</label>
-            <input type="number" id="startNumber">
-            <label for="endNumber">Target Number:</label>
-            <input type="number" id="endNumber">
-            <label for="timePerSlice">Time per Slice:</label>
-			<input type="number" id="timePerSlice" placeholder="(Optional)">
-			<select id="timeUnit">
-				<option value="seconds">Seconds</option>
-				<option value="minutes">Minutes</option>
-				<option value="hours">Hours</option>
-				<option value="days">Days</option>
-			</select>
-            <h1 id="countdown"></h1>
-            <div id="timeSlices"></div>
-        </div>
-        <div id="infoModal" class="modal">
+	<div class="sidebar">
+		<div class="sidebar-content">
+			<a href="../index.html">
+				<class="icon">Home
+			</a>
+			<a class="current">
+				<class="icon">Advanced Timer
+			</a>
+		</div>
+	</div>
+	<h1>Advanced Timer</h1>
+	<div class="content">
+		<div class="container">
+			<div class="options-container">
+				<div class="presets">
+					<h2>Presets</h2>
+                    <label for="presets">Select a Preset:</label>
+					<select id="presetDropdown">
+						<option value="" disabled selected></option>
+					</select>
+					<button onclick="savePreset()">Save Preset</button>
+					<button id="deletePresetButton">Delete Preset</button>
+				</div>
+				<div class="time-options">
+					<h2>Time Options</h2>
+					<label for="startDateTime">Start Date and Time:</label>
+					<input type="datetime-local" id="startDateTime">
+					<label for="targetDateTime">Target Date and Time:</label>
+					<input type="datetime-local" id="targetDateTime">
+					<label for="startNumber">Start Number:</label>
+					<input type="number" id="startNumber">
+					<label for="endNumber">Target Number:</label>
+					<input type="number" id="endNumber">
+				</div>
+				<div class="slice-options">
+					<h2>Slice Options</h2>
+					<label for="timePerSlice">Time per Slice:</label>
+					<input type="number" id="timePerSlice" placeholder="(Optional)">
+					<select id="timeUnit">
+						<option value="seconds">Seconds</option>
+						<option value="minutes">Minutes</option>
+						<option value="hours">Hours</option>
+						<option value="days">Days</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div id="infoModal" class="modal">
 			<div class="modal-content">
 				<span class="close-button" onclick="closeModal()">&times;</span>
 				<h2>About This Tool</h2>
-				<p>
-					This is an advanced timer web application. You can set a start date and time, a target date and time, as well as start and end numbers. The countdown will display the current number based on the progress between the start and target times.
-				</p>
-				<p>
-					The "Time per Slice" text box allows you to generate a series of time-based slices based on your input. These slices provide a breakdown of the countdown progress over time, showing how the current number changes between the start and target times at regular intervals. You can choose the time unit (days, hours, minutes, or seconds) for these slices to suit your needs.
-				</p>
+				<p> This is an advanced timer web application. You can set a start date and time, a target date and time, as well as start and end numbers. The countdown will display the current number based on the progress between the start and target times. </p>
+				<p> The "Time per Slice" text box allows you to generate a series of time-based slices based on your input. These slices provide a breakdown of the countdown progress over time, showing how the current number changes between the start and target times at regular intervals. You can choose the time unit (days, hours, minutes, or seconds) for these slices to suit your needs. </p>
 			</div>
 		</div>
-    </div>
-    <button id="infoButton" onclick="openModal()" class="info-button">?</button>
-    <script src="../JavaScript/AdvancedTimer.js"></script>
+	</div>
+	<h1 id="countdown"></h1>
+    <div id="timeSlices"></div>
+	<button id="infoButton" onclick="openModal()" class="info-button">?</button>
+	<script src="../JavaScript/AdvancedTimer.js"></script>
 </body>
+
 </html>
