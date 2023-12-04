@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Time Estimator</title>
+	<link href="../CSS/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div class="sidebar">
+		<div class="sidebar-content">
+			<a href="../index.html">
+				<class="icon">Home
+			</a>
+			<a class="current">
+				<class="icon">Advanced Timer
+			</a>
+		</div>
+	</div>
+	<h1>Time Estimator</h1>
+	<div class="content">
+        <div class="container">
+            <div class="options-container">
+                <div class="time-options">
+                    <h2>Time Options</h2>
+                    <label for="startTimer">Set a Time to multiply:</label>
+                    <button id="startStopButton" onclick="startStopTimer()">Start Timer</button>
+                    <label for="multiplyNumber">Multiply by:</label>
+                    <input type="number" id="multiplyNumber">
+                </div>
+            </div>
+        </div>
+		<div id="infoModal" class="modal">
+			<div class="modal-content">
+				<span class="close-button" onclick="closeModal()">&times;</span>
+				<h2>About This Tool</h2>
+				<p>The Time Estimator tool allows you to set a timer and multiply the elapsed time by a specified number. This feature is useful for estimating longer durations based on shorter intervals.</p>
+                <p>Simply start the timer, let it run for as long as needed, and then input your multiplier to see the estimated extended time.</p>
+			</div>
+		</div>
+	</div>
+	<h1 id="timer"></h1>
+    <div id="estimatedTime"></div>
+	<button id="infoButton" onclick="openModal()" class="info-button">?</button>
+	<script src="../JavaScript/TimeEstimator.js"></script>
+    <script src="../JavaScript/Script.js"></script>
+</body>
+
+</html>

@@ -26,24 +26,6 @@ updateCountdown();
 setInterval(generateTimeSlices, 1);
 generateTimeSlices();
 
-
-function openModal() {
-    const modal = document.getElementById("infoModal");
-    modal.style.display = "flex";
-}
-
-function closeModal() {
-    const modal = document.getElementById("infoModal");
-    modal.style.display = "none";
-}
-
-window.onclick = function(event) {
-    const modal = document.getElementById("infoModal");
-    if (event.target === modal) {
-        modal.style.display = "none";
-    }
-}
-
 document.addEventListener("DOMContentLoaded", function() {
     const now = new Date();
     const currentMinute = now.getMinutes();
@@ -76,6 +58,7 @@ function generateTimeSlices() {
     const endNumber = parseFloat(document.getElementById("endNumber").value);
     const timePerSlice = parseFloat(document.getElementById("timePerSlice").value);
     const timeUnit = document.getElementById("timeUnit").value;
+    const sliceHighlighter = parseFloat(document.getElementById("sliceHighlighter").value);
     const startDate = new Date(startDateInput);
     const targetDate = new Date(targetDateInput);
 
@@ -87,9 +70,10 @@ function generateTimeSlices() {
     const currentTime = new Date();
     const timeSlicesContainer = document.getElementById("timeSlices");
     timeSlicesContainer.innerHTML = "";
-    
+
     let timeForNextSlice = startDate;
     let sliceCounter = 0;
+    let lastHighlightedSlice = null; // Store the last highlighted slice
 
     while (timeForNextSlice < targetDate) {
         sliceCounter++;
@@ -101,9 +85,17 @@ function generateTimeSlices() {
         }
 
         const sliceEntry = document.createElement("p");
-        sliceEntry.textContent = `${timeForNextSlice.toDateString()} ${timeForNextSlice.toLocaleTimeString()}\t${calculateCurrentNumber(timeForNextSlice, startDate, targetDate, startNumber, endNumber)}`;
+        const currentSliceNumber = calculateCurrentNumber(timeForNextSlice, startDate, targetDate, startNumber, endNumber);
+
+        sliceEntry.textContent = `${timeForNextSlice.toDateString()} ${timeForNextSlice.toLocaleTimeString()}\t${currentSliceNumber.toFixed(2)}`;
+
+        if (!isNaN(sliceHighlighter) && currentSliceNumber <= sliceHighlighter) {
+            // Store the last slice that meets the condition, but don't highlight it yet
+            lastHighlightedSlice = sliceEntry;
+        }
 
         if (timeForNextSlice <= currentTime && currentTime < getNextSliceTime(timeForNextSlice, timePerSlice, timeUnit)) {
+            // Highlight the current slice in green
             sliceEntry.style.color = "lime";
         }
 
@@ -111,7 +103,16 @@ function generateTimeSlices() {
 
         timeForNextSlice = getNextSliceTime(timeForNextSlice, timePerSlice, timeUnit);
     }
+
+    // Highlight the last slice that meets the condition in yellow
+    if (lastHighlightedSlice) {
+        lastHighlightedSlice.style.color = "yellow";
+    }
 }
+
+
+
+
 
 function getNextSliceTime(currentTime, timePerSlice, timeUnit) {
     switch (timeUnit) {
