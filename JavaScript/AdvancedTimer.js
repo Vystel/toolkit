@@ -79,7 +79,7 @@ function generateTimeSlices() {
         sliceCounter++;
 
         if (sliceCounter > 250) {
-            timeSlicesContainer.innerHTML = "";
+            timeSlicesContainer.innerHTML = "Too many slices! Please adjust your input.";
             sliceCounter = 0;
             break;
         }
