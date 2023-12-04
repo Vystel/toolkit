@@ -73,7 +73,7 @@ function generateTimeSlices() {
 
     let timeForNextSlice = startDate;
     let sliceCounter = 0;
-    let lastHighlightedSlice = null; // Store the last highlighted slice
+    let lastHighlightedSlice = null;
 
     while (timeForNextSlice < targetDate) {
         sliceCounter++;
@@ -90,12 +90,10 @@ function generateTimeSlices() {
         sliceEntry.textContent = `${timeForNextSlice.toDateString()} ${timeForNextSlice.toLocaleTimeString()}\t${currentSliceNumber.toFixed(2)}`;
 
         if (!isNaN(sliceHighlighter) && currentSliceNumber <= sliceHighlighter) {
-            // Store the last slice that meets the condition, but don't highlight it yet
             lastHighlightedSlice = sliceEntry;
         }
 
         if (timeForNextSlice <= currentTime && currentTime < getNextSliceTime(timeForNextSlice, timePerSlice, timeUnit)) {
-            // Highlight the current slice in green
             sliceEntry.style.color = "lime";
         }
 
@@ -104,15 +102,10 @@ function generateTimeSlices() {
         timeForNextSlice = getNextSliceTime(timeForNextSlice, timePerSlice, timeUnit);
     }
 
-    // Highlight the last slice that meets the condition in yellow
     if (lastHighlightedSlice) {
         lastHighlightedSlice.style.color = "yellow";
     }
 }
-
-
-
-
 
 function getNextSliceTime(currentTime, timePerSlice, timeUnit) {
     switch (timeUnit) {
